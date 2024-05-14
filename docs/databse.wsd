@@ -1,0 +1,61 @@
+@startuml database
+
+class game {
+    ID: int
+    ..
+    step: int
+    total_players: int
+
+    done: bool
+    winner: int
+}
+
+
+
+class game_user_relation {
+    ID: int
+    ..
+    user_ID: int
+    game_ID: int
+    user_score: int
+}
+
+class user_friends {
+    ID: int
+    ..
+    user_A_ID: int
+    user_B_ID: int
+    accepted: bool
+}
+
+
+class user {
+    ID: int
+    ..
+    name: string
+    email: string
+    passwd: string
+    money: int
+}
+
+class game_comments {
+    ID: int
+    ..
+    game_ID: int
+    user_ID: int
+    text: string
+}
+
+' user friends relations
+game.user_friends::user_A_ID -- user::ID
+game.user_friends::user_B_ID -- user::ID
+
+
+game::ID -right- game_user_relation::game_ID
+user::ID -left- game_user_relation::user_ID
+
+' comments relations
+game::ID -up- game_comments::game_ID
+user::ID -up- game_comments::user_ID
+
+@enduml
